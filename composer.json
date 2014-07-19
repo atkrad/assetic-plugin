@@ -1,0 +1,33 @@
+{
+    "name": "hurad/assetic-plugin",
+    "description": "Asset Management for CakePHP",
+    "homepage": "https://github.com/hurad/assetic-plugin",
+    "type": "hurad-plugin",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Hurad Community",
+            "homepage": "https://github.com/hurad/assetic-plugin/graphs/contributors"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/hurad/assetic-plugin/issues",
+        "source": "https://github.com/hurad/assetic-plugin"
+    },
+    "require": {
+        "php": ">=5.4.19",
+        "cakephp/cakephp": "3.0.*@dev",
+        "composer/installers": "1.0.*",
+        "kriswallsmith/assetic": "1.1.*",
+        "fxp/composer-asset-plugin": "1.0.*@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Assetic\\": "./plugins/Assetic/src",
+            "Assetic\\Test\\": "./plugins/Assetic/tests"
+        }
+    },
+    "extra": {
+        "installer-name": "Assetic"
+    }
+}
