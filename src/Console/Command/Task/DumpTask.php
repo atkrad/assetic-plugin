@@ -3,12 +3,15 @@
 namespace Assetic\Console\Command\Task;
 
 use Assetic\Asset\FileAsset;
+use Assetic\Asset\GlobAsset;
 use Assetic\AssetManager;
 use Assetic\AssetWriter;
 use Cake\Cache\Cache;
 use Cake\Console\Shell;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cake\Utility\File;
+use Cake\Utility\Folder;
 use Cake\Utility\Xml;
 use DOMDocument;
 use DOMElement;
@@ -66,7 +69,7 @@ class DumpTask extends Shell
     {
         foreach ($this->getAssetsXMLFiles() as $path => $XMLFile) {
             $this->out('');
-            $this->out(__d('assetic_console', '<info>Start dumping "%s" assets:</info>', $path));
+            $this->out(sprintf('<info>Start dumping "%s" assets:</info>', $path));
 
             $xml = new Xml();
             $domDocument = $xml->build($XMLFile, ['return' => 'domdocument']);
@@ -93,7 +96,7 @@ class DumpTask extends Shell
             $assetWriter = new AssetWriter(WWW_ROOT);
             $assetWriter->writeManagerAssets($assetManager);
             $this->dumpStaticFiles($domDocument);
-            $this->out(__d('assetic_console', '<info>End</info>'));
+            $this->out('<info>End</info>');
         }
     }
 
@@ -107,22 +110,27 @@ class DumpTask extends Shell
         $xpath = new DOMXPath($domDocument);
         $assetsNodeList = $xpath->query('/assetic/static/files/file');
 
-        $assetManager = new AssetManager();
         /** @var $assetNode DOMElement */
         foreach ($assetsNodeList as $assetNode) {
             $source = strtr($assetNode->getElementsByTagName('source')->item(0)->nodeValue, $this->paths);
             $destination = strtr($assetNode->getElementsByTagName('destination')->item(0)->nodeValue, $this->paths);
 
-            $assetManager->set(
-                $assetNode->getAttribute('name'),
-                $fileAsset = new FileAsset($source)
-            );
-            $fileAsset->setTargetPath($destination);
-            $this->out($source . ' <info>===>>></info> ' . WWW_ROOT . $destination);
-        }
+            $des = new Folder(WWW_ROOT . $destination, true, 0777);
 
-        $assetWriter = new AssetWriter(WWW_ROOT);
-        $assetWriter->writeManagerAssets($assetManager);
+            $allFiles = glob($source);
+
+            foreach ($allFiles as $src) {
+                if (is_dir($src)) {
+                    $srcFolder = new Folder($src);
+                    $srcFolder->copy($des->pwd());
+                } else {
+                    $srcFile = new File($src);
+                    $srcFile->copy($des->path . DS . $srcFile->name);
+                }
+
+                $this->out($src . ' <info>===>>></info> ' . WWW_ROOT . $destination);
+            }
+        }
     }
 
     /**
@@ -133,24 +141,24 @@ class DumpTask extends Shell
     protected function getAssetsXMLFiles()
     {
         $output = [];
-        $appAssetsXML = APP . 'Config' . DS . 'assets.xml';
+        $appAssetsXML = CONFIG . 'assets.xml';
 
         if (is_file($appAssetsXML)) {
             $output['App'] = $appAssetsXML;
         } else {
-            $this->out(__d('assetic_console', '<warning>App have not assets.xml file.</warning>'), 1, Shell::VERBOSE);
+            $this->out('<warning>App have not assets.xml file.</warning>', 1, Shell::VERBOSE);
         }
 
         foreach (Plugin::loaded() as $plugin) {
-            $classPath = Plugin::classPath($plugin);
-            $configPath = $classPath . 'Config' . DS;
+            $classPath = Plugin::path($plugin);
+            $configPath = $classPath . 'config' . DS;
             $assetsFile = $configPath . 'assets.xml';
 
             if (is_file($assetsFile)) {
                 $output[$plugin] = $assetsFile;
             } else {
                 $this->out(
-                    __d('assetic_console', '<warning>Plugin "%s" have not assets.xml file.</warning>', $plugin),
+                    sprintf('<warning>Plugin "%s" have not assets.xml file.</warning>', $plugin),
                     1,
                     Shell::VERBOSE
                 );
@@ -168,18 +176,14 @@ class DumpTask extends Shell
     public function getOptionParser()
     {
         $parser = parent::getOptionParser();
-        $parser->description(
-            __d(
-                'assetic_console',
-                'Dump assets into "webroot" directory.'
-            )
-        )->addSubcommand(
+        $parser->description('Dump assets into "webroot" directory.')
+            ->addSubcommand(
                 'all',
                 [
-                    'help' => __d('assetic_console', 'Dump all assets in all plugins and app.')
+                    'help' => 'Dump all assets in all plugins and app.'
                 ]
             );
 
         return $parser;
     }
-} 
+}
