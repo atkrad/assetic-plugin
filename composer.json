@@ -3,7 +3,8 @@
     "description": "Asset Management for CakePHP",
     "homepage": "https://github.com/hurad/assetic-plugin",
     "type": "hurad-plugin",
-    "license": "GPL-3.0",
+    "keywords": ["hurad", "assetic"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Hurad Community",
