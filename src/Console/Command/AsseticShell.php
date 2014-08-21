@@ -2,7 +2,7 @@
 
 namespace Assetic\Console\Command;
 
-use App\Console\Command\AppShell;
+use Cake\Console\Shell;
 use Cake\Utility\Inflector;
 
 /**
@@ -10,7 +10,7 @@ use Cake\Utility\Inflector;
  *
  * @package Assetic\Console\Command
  */
-class AsseticShell extends AppShell
+class AsseticShell extends Shell
 {
     /**
      * Contains tasks to load and instantiate
@@ -25,7 +25,7 @@ class AsseticShell extends AppShell
     public function main()
     {
         $this->out('');
-        $this->out(__d('cake_console', '<info>Available assetic commands:</info>'));
+        $this->out('<info>Available assetic commands:</info>');
         $this->out('');
 
         foreach ($this->_taskMap as $task => $config) {
@@ -34,12 +34,7 @@ class AsseticShell extends AppShell
         }
 
         $this->out('');
-        $this->out(
-            __d(
-                'cake_console',
-                'By using <info>Console/cake assetic.assetic [name]</info> you can invoke a specific assetic task.'
-            )
-        );
+        $this->out('By using <info>Console/cake assetic.assetic [name]</info> you can invoke a specific assetic task.');
     }
 
     /**
@@ -51,7 +46,7 @@ class AsseticShell extends AppShell
     {
         $parser = parent::getOptionParser();
 
-        $parser->description(__d('assetic_console', 'Asset Management for CakePHP.'));
+        $parser->description('Asset Management for CakePHP.');
 
         foreach ($this->_taskMap as $task => $config) {
             $taskParser = $this->{$task}->getOptionParser();
