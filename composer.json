@@ -18,7 +18,7 @@
     "require": {
         "php": ">=5.4.16",
         "cakephp/cakephp": "3.0.*@dev",
-        "cakephp/plugin-installer": "*"
+        "cakephp/plugin-installer": "*",
         "kriswallsmith/assetic": "1.1.*",
         "fxp/composer-asset-plugin": "1.0.*@dev"
     },
