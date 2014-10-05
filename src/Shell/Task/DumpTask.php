@@ -1,9 +1,8 @@
 <?php
 
-namespace Assetic\Console\Command\Task;
+namespace Assetic\Shell\Task;
 
 use Assetic\Asset\FileAsset;
-use Assetic\Asset\GlobAsset;
 use Assetic\AssetManager;
 use Assetic\AssetWriter;
 use Cake\Cache\Cache;
@@ -116,7 +115,6 @@ class DumpTask extends Shell
             $destination = strtr($assetNode->getElementsByTagName('destination')->item(0)->nodeValue, $this->paths);
 
             $des = new Folder(WWW_ROOT . $destination, true, 0777);
-
             $allFiles = glob($source);
 
             foreach ($allFiles as $src) {
