@@ -1,24 +1,24 @@
 {
-    "name": "hurad/assetic-plugin",
+    "name": "atkrad/assetic-plugin",
     "description": "Asset Management for CakePHP",
-    "homepage": "https://github.com/hurad/assetic-plugin",
-    "type": "hurad-plugin",
-    "keywords": ["hurad", "assetic"],
+    "homepage": "https://github.com/atkrad/assetic-plugin",
+    "type": "cakephp-plugin",
+    "keywords": ["CakePHP", "assetic", "manager"],
     "license": "MIT",
     "authors": [
         {
-            "name": "Hurad Community",
-            "homepage": "https://github.com/hurad/assetic-plugin/graphs/contributors"
+            "name": "Mohammad Abdoli Rad",
+            "homepage": "https://github.com/atkrad"
         }
     ],
     "support": {
-        "issues": "https://github.com/hurad/assetic-plugin/issues",
-        "source": "https://github.com/hurad/assetic-plugin"
+        "issues": "https://github.com/atkrad/assetic-plugin/issues",
+        "source": "https://github.com/atkrad/assetic-plugin"
     },
     "require": {
-        "php": ">=5.4.19",
+        "php": ">=5.4.16",
         "cakephp/cakephp": "3.0.*@dev",
-        "composer/installers": "1.0.*",
+        "cakephp/plugin-installer": "*"
         "kriswallsmith/assetic": "1.1.*",
         "fxp/composer-asset-plugin": "1.0.*@dev"
     },
