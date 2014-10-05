@@ -24,8 +24,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Assetic\\": "./plugins/Assetic/src",
-            "Assetic\\Test\\": "./plugins/Assetic/tests"
+            "Assetic\\": "./src"
         }
     },
     "extra": {

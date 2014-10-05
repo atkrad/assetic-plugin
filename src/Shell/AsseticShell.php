@@ -1,12 +1,12 @@
 <?php
 
-namespace Assetic\Console\Command;
+namespace Assetic\Shell;
 
 use Cake\Console\Shell;
 use Cake\Utility\Inflector;
 
 /**
- * Class AsseticShell
+ * Assetic Shell
  *
  * @package Assetic\Console\Command
  */
