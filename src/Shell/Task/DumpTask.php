@@ -89,7 +89,7 @@ class DumpTask extends Shell
                     $fileAsset = new FileAsset($source)
                 );
                 $fileAsset->setTargetPath($destination);
-                $this->out($source . ' <info>===>>></info> ' . WWW_ROOT . $destination);
+                $this->out($source . ' <info> >>> </info> ' . WWW_ROOT . $destination);
             }
 
             $assetWriter = new AssetWriter(WWW_ROOT);
@@ -103,19 +103,41 @@ class DumpTask extends Shell
      * Dump static files
      *
      * @param DOMDocument $domDocument
+     *
+     * @throws \Exception
      */
     protected function dumpStaticFiles(DOMDocument $domDocument)
     {
         $xpath = new DOMXPath($domDocument);
         $assetsNodeList = $xpath->query('/assetic/static/files/file');
+        $validFlags = [
+            'GLOB_MARK' => GLOB_MARK,
+            'GLOB_NOSORT' => GLOB_NOSORT,
+            'GLOB_NOCHECK' => GLOB_NOCHECK,
+            'GLOB_NOESCAPE' => GLOB_NOESCAPE,
+            'GLOB_BRACE' => GLOB_BRACE,
+            'GLOB_ONLYDIR' => GLOB_ONLYDIR,
+            'GLOB_ERR' => GLOB_ERR
+        ];
 
         /** @var $assetNode DOMElement */
         foreach ($assetsNodeList as $assetNode) {
             $source = strtr($assetNode->getElementsByTagName('source')->item(0)->nodeValue, $this->paths);
             $destination = strtr($assetNode->getElementsByTagName('destination')->item(0)->nodeValue, $this->paths);
 
+            $flag = $assetNode->getElementsByTagName('source')->item(0)->getAttribute('flag');
+            if (empty($flag)) {
+                $flag = null;
+            } else {
+                if (!array_key_exists($flag, $validFlags)) {
+                    throw new \Exception(sprintf('This flag "%s" not valid.', $flag));
+                }
+
+                $flag = $validFlags[$flag];
+            }
+
             $des = new Folder(WWW_ROOT . $destination, true, 0777);
-            $allFiles = glob($source);
+            $allFiles = glob($source, $flag);
 
             foreach ($allFiles as $src) {
                 if (is_dir($src)) {
@@ -126,7 +148,7 @@ class DumpTask extends Shell
                     $srcFile->copy($des->path . DS . $srcFile->name);
                 }
 
-                $this->out($src . ' <info>===>>></info> ' . WWW_ROOT . $destination);
+                $this->out($src . ' <info> >>> </info> ' . WWW_ROOT . $destination);
             }
         }
     }
