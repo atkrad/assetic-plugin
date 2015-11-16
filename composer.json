@@ -19,7 +19,7 @@
         "php": ">=5.4.16",
         "cakephp/cakephp": "~3.0",
         "kriswallsmith/assetic": "1.1.*",
-        "fxp/composer-asset-plugin": "1.0.*@dev"
+        "fxp/composer-asset-plugin": "~1.0"
     },
     "autoload": {
         "psr-4": {
