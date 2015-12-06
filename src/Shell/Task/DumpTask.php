@@ -1,6 +1,6 @@
 <?php
 
-namespace Assetic\Shell\Task;
+namespace Pie\Assetic\Shell\Task;
 
 use Assetic\Asset\FileAsset;
 use Assetic\AssetManager;
@@ -17,9 +17,9 @@ use DOMElement;
 use DOMXPath;
 
 /**
- * Class DumpTask
+ * Dump Task
  *
- * @package Assetic\Console\Command\Task
+ * @package Pie\Assetic\Shell\Task
  */
 class DumpTask extends Shell
 {

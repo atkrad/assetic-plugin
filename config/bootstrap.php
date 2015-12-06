@@ -2,4 +2,4 @@
 
 use Cake\Core\Configure;
 
-Configure::load('Assetic.config.php', 'default', true);
+Configure::load('Pie/Assetic.config', 'default', true);

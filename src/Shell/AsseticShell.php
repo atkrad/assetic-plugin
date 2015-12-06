@@ -1,6 +1,6 @@
 <?php
 
-namespace Assetic\Shell;
+namespace Pie\Assetic\Shell;
 
 use Cake\Console\Shell;
 use Cake\Utility\Inflector;
@@ -17,7 +17,7 @@ class AsseticShell extends Shell
      *
      * @var array
      */
-    public $tasks = ['Assetic.Dump'];
+    public $tasks = ['Pie/Assetic.Dump'];
 
     /**
      * Default action
