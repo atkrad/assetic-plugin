@@ -1,9 +1,9 @@
 {
-    "name": "atkrad/assetic-plugin",
+    "name": "phpie/assetic-plugin",
     "description": "Asset Management for CakePHP",
-    "homepage": "https://github.com/atkrad/assetic-plugin",
+    "homepage": "https://github.com/phpie/assetic-plugin",
     "type": "cakephp-plugin",
-    "keywords": ["CakePHP", "assetic", "manager"],
+    "keywords": ["CakePHP", "PHPie", "assetic", "manager"],
     "license": "MIT",
     "authors": [
         {
@@ -12,8 +12,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/atkrad/assetic-plugin/issues",
-        "source": "https://github.com/atkrad/assetic-plugin"
+        "issues": "https://github.com/phpie/assetic-plugin/issues",
+        "source": "https://github.com/phpie/assetic-plugin"
     },
     "require": {
         "php": ">=5.4.16",
@@ -23,10 +23,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Assetic\\": "./src"
+            "Pie\\Assetic\\": "src"
         }
-    },
-    "extra": {
-        "installer-name": "Assetic"
     }
 }
