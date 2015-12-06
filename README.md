@@ -11,4 +11,4 @@ The master branch has the following requirements:
 
 ## Issues with Assetic Plugin
 
-If you have issues with Assetic Plugin, you can report them at https://github.com/hurad/assetic-plugin/issues
+If you have issues with Assetic Plugin, you can report them at https://github.com/phpie/assetic-plugin/issues
